@@ -5,8 +5,18 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 1. What was broken when you started?
 
 - What did the game look like the first time you ran it?
+    At first, the game looked simple and easy to understand. Via the UI I was prompted to guess a number between 1 and 100 and told I had 8 attempts to do so. I could also see there were several buttons I could interact with, such as "Submit Guess", "New Game", and "Show Hint". I could see the game provides the ability to adjust difficulty, which affected the range of valid numbers and the number of available guess attempts. Lastly, I could see a Developer Debug Info section which provided useful insight into the game state and the history it was tracking.
 - List at least two concrete bugs you noticed at the start  
   (for example: "the secret number kept changing" or "the hints were backwards").
+    Some of the bugs I immediately noticed:
+      1. The attempt counter incremented from 0 to 1 upon page refresh, even though no attempt was submitted
+        a. I expected my attempt count to remain at 0
+      2. The hint text hints in the wrong direction
+        a. Based on the debug info, I expected the hints to point in the opposite direction
+      3. Entries are not added to history until the Submit button is pressed twice or the hint checkbox is clicked
+        a. I expected the submit button to update the history dictionary
+      4. History and game state are lost upon page refresh
+        a. I expected my game history and state to persist
 
 ---
 
