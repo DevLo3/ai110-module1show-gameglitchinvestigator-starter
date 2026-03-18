@@ -15,8 +15,8 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
         a. Based on the debug info, I expected the hints to point in the opposite direction
       3. Entries are not added to history until the Submit button is pressed twice or the hint checkbox is clicked
         a. I expected the submit button to update the history dictionary
-      4. History and game state are lost upon page refresh
-        a. I expected my game history and state to persist
+      4.  New Game button does not clear history dictionary and also does not properly reset the game, even if you run out of attempts or won during your previous game
+        a. I expect the button to reset all game variables and present me with a fresh game 
 
 ---
 
