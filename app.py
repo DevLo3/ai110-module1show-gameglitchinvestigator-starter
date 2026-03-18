@@ -30,6 +30,7 @@ st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
 
+# BUG #1 FIX: Changed initialization value from 1 to 0. Identified and fixed independently by after using Claude to identify where the logic lived.
 if "attempts" not in st.session_state:
     st.session_state.attempts = 0
 
@@ -75,7 +76,9 @@ with col3:
 if new_game:
     st.session_state.attempts = 0
     st.session_state.secret = random.randint(1, 100)
+    # BUG #3a FIX: Added explicit reset of history list. Identified via root cause analysis with Claude Code, fixed by adding this line.
     st.session_state.history = []
+    # BUG #3b FIX: Added reset of status to "playing". Identified via root cause analysis with Claude Code; without this, the st.stop() gate blocked all further submissions after a win or loss.
     st.session_state.status = "playing"
     st.session_state.last_hint = None
     st.success("New game started.")
@@ -133,6 +136,7 @@ if submit:
                     f"Score: {st.session_state.score}"
                 )
 
+    # BUG #4 FIX: Added st.rerun() so the debug info re-renders with updated history immediately after submit. Identified and fixed collaboratively with Claude Code.
     st.rerun()
 
 if st.session_state.last_hint:
