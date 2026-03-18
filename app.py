@@ -49,6 +49,7 @@ st.info(
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
 
+# FIXME: debug info is rendered before the submit handler is called, resulting in outdated debug info being displayed after a user submits a guess
 with st.expander("Developer Debug Info"):
     st.write("Secret:", st.session_state.secret)
     st.write("Attempts:", st.session_state.attempts)
