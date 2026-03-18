@@ -22,9 +22,12 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 ## 2. How did you use AI as a teammate?
 
-- Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
+- Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)? 
+  For this excercise, I used Claude Code as provided to our class by Anthropic.
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
+  One of the bugs I identified when playing the guessing game was the fact that the game did not properly update the history dictionary after a user submitted a guess. Instead, I found I had to press submit twice before my entry was reflected in the debug console. Upon mentioning this to Claude, it was able to identify the issue was due to the debug being rendered before the submit handler activated. Since streamlit process code from top to bottom, this meant that anytime a user would submit a new guess, the debug console was rendered with old information. Claude correctly identified a simple fixed which involved adding a st.rerun() call to the submit handler, which forced the app to re-render the debug console with the newest information anytime a new submission was provided. I was able to verify this by manually testing the functionality myself and then running it through a pytest case.
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+  One thing I discovered after implementing Claude's suggested fix for the above bug was that the applications hint banner was now broken. It no longer appeared or worked after, even when the "Show hint" checkbox was toggled. It turns out that suggested solution provided by Claude (which I allowed to be implemented) for the above bug inadvertently broke the hint banner functionality by creating log that rendered and wiped a hint in the same interaction before it could ever be displayed to the user. After pointing this out to Claude, we were able to identify a solution to this bug as well.
 
 ---
 
