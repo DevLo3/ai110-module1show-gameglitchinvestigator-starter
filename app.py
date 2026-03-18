@@ -42,6 +42,9 @@ if "status" not in st.session_state:
 if "history" not in st.session_state:
     st.session_state.history = []
 
+if "last_hint" not in st.session_state:
+    st.session_state.last_hint = None
+
 st.subheader("Make a guess")
 
 st.info(
@@ -49,7 +52,6 @@ st.info(
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
 
-# FIXME: debug info is rendered before the submit handler is called, resulting in outdated debug info being displayed after a user submits a guess
 with st.expander("Developer Debug Info"):
     st.write("Secret:", st.session_state.secret)
     st.write("Attempts:", st.session_state.attempts)
@@ -75,6 +77,7 @@ if new_game:
     st.session_state.secret = random.randint(1, 100)
     st.session_state.history = []
     st.session_state.status = "playing"
+    st.session_state.last_hint = None
     st.success("New game started.")
     st.rerun()
 
@@ -104,7 +107,9 @@ if submit:
         outcome, message = check_guess(guess_int, secret)
 
         if show_hint:
-            st.warning(message)
+            st.session_state.last_hint = message
+        else:
+            st.session_state.last_hint = None
 
         st.session_state.score = update_score(
             current_score=st.session_state.score,
@@ -127,6 +132,11 @@ if submit:
                     f"The secret was {st.session_state.secret}. "
                     f"Score: {st.session_state.score}"
                 )
+
+    st.rerun()
+
+if st.session_state.last_hint:
+    st.warning(st.session_state.last_hint)
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")
