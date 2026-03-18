@@ -31,7 +31,8 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📸 Demo
 
-- [ ] [Insert a screenshot of your fixed, winning game here]
+![Balloon win animation](assets/balloons.png)
+![Win screen](assets/win_screen.png)
 
 ## 🚀 Stretch Features
 
