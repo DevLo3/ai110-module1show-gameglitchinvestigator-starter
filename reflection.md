@@ -34,9 +34,12 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 3. Debugging and testing your fixes
 
 - How did you decide whether a bug was really fixed?
+    I decided a bug was truly fixed by manually running through the part of the app where its functionality existed. In doing this, I interacted with it as a user would and ensured the app's logic provided the expected outcome(s).
 - Describe at least one test you ran (manual or using pytest)  
   and what it showed you about your code.
+    One simple test I ran involved just submitting random numbers to the game with the "Show hint" check box toggled on and ensuring the hint displayed was directionally accurated based on what I knew the number to be
 - Did AI help you design or understand any tests? How?
+    Absolutely. AI helped design the pytest cases, and answered all questions I had to further my understand of the game's logic and the streamlit platform and its capabilities.
 
 ---
 
