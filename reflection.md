@@ -46,8 +46,11 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 4. What did you learn about Streamlit and state?
 
 - In your own words, explain why the secret number kept changing in the original app.
+    From my observation, the secret number didn't actually change between guesses, it was always stored correctly in `st.session_state`. What made the game feel broken was that on even-numbered attempts, the code was secretly converting the secret number from an integer to a string before comparing it to the player's guess. This caused the comparison logic to behave differently depending on the attempt number, making correct guesses register as wrong and the hints point in misleading directions. It looked like the secret was changing, but really the type of the value being compared was changing underneath.
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+    I'd explain it this way: every time you interact with a Streamlit app (clicking a button, checking a box, typing in a field) the entire Python script runs again from top to bottom, like hitting refresh on the logic. That means any regular Python variable you create gets wiped and recreated every single time. Session state is Streamlit's solution to this: it's a special dictionary that persists across those reruns, so values you store there survive the script restarting. The catch is you have to be deliberate about what you put in it and when, because the order in which things render and the order in which state changes are applied can cause subtle bugs. We ran into this a couple of times throughout this project.
 - What change did you make that finally gave the game a stable secret number?
+    The secret was already being stored in `st.session_state`, so the real fix was understanding the `if "secret" not in st.session_state` guard clause. This pattern ensures the secret is only randomly generated once — on the very first page load — and skipped on every subsequent rerun. Once I understood that this guard is what protects all persistent state in Streamlit, the rest of the state bugs became much easier to reason about and fix.
 
 ---
 
@@ -55,5 +58,8 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+    One habit I want to carry forward is using AI to identify the root cause and location of a bug before attempting a fix. On several occasions in this project I described what I was observing and asked Claude where in the code that behavior was coming from, rather than jumping straight to asking for a solution. This made it easier to understand the fix when it came and also helped me catch cases where Claude's suggested fix introduced a new problem, because I understood the underlying logic well enough to notice something was off.
 - What is one thing you would do differently next time you work with AI on a coding task?
+    Next time I would test each AI-suggested fix more thoroughly before moving on. There were a couple of moments in this project where I accepted a fix, it resolved the immediate issue, but it silently broke something else that I only caught later. Building a habit of running the full test suite and manually walking through the affected flow after every change — not just verifying the specific bug — would have caught those regressions earlier and saved time.
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+    Before this project I think I treated AI-generated code as either correct or obviously wrong, but this project showed me it occupies a messier middle ground. It can be locally correct while being globally broken, fixing one thing while quietly introducing another. I now think of AI as a capable but fallible collaborator that still needs a human in the loop who understands the codebase well enough to catch what the AI misses.
